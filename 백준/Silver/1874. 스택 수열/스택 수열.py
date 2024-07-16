@@ -1,9 +1,11 @@
+import sys
+
 n = int(input())
 numbers = []
 calc = []
 i = 1
 for _ in range(n):
-    number = int(input())
+    number = int(sys.stdin.readline())
     while i <= number:
         numbers.append(i)
         calc.append("+")
