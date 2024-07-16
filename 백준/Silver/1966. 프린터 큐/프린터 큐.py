@@ -1,22 +1,27 @@
-def solution(d, p, r):
-    count = 0
-    i = 0
-    while True:
-        if max(r) == r[i]:
-            count += 1
-            r[i] = 0
-            if i == p:
-                break
-        i += 1
-        if i == d:
-            i = 0
-    return count
+from collections import deque
 
-n = int(input())
-answer_list = []
-for i in range(n):
+testcase = int(input())
+
+for _ in range(testcase):
+    count = 0
     document, position = map(int, input().split(" "))
-    rank = input().split(" ")
-    rank = list(map(int, rank))
-    answer_list.append(solution(document, position, rank))
-print('\n'.join(map(str, answer_list)))
+    ranks = list(map(int,input().split(" ")))
+    print_queue = deque()
+    for i, rank in enumerate(ranks):
+        d = {
+            "index": i,
+            "rank": rank,
+        }
+        print_queue.append(d)
+    while print_queue:
+        first = print_queue.popleft() # 0, 1
+        for queue in print_queue: # 1, 2
+            if first["rank"] < queue["rank"]:
+                print_queue.append(first)
+                break
+        if first in print_queue:
+            continue
+        count += 1
+        if first["index"] == position:
+            print(count)
+            break
