@@ -1,25 +1,20 @@
 from collections import defaultdict
 
+
 def solution(keymap, targets):
-    answer = []
-    key_num = defaultdict(list)
+    key_num = defaultdict(int)
     for key in keymap:
-         for i in range(len(key)):
-             key_num[i].append(key[i])
+        for i, char in enumerate(key):
+            if key_num[char] == 0 or key_num[char] > i + 1:
+                key_num[char] = i + 1
+
+    answer = []
     for target in targets:
         count = 0
-        for i in range(len(target)):
-            check_num = check(key_num,target[i])
-            if check_num == -1:
+        for char in target:
+            if key_num[char] == 0:
                 count = -1
                 break
-            else:
-                count += check_num
+            count += key_num[char]
         answer.append(count)
     return answer
-
-def check(key_num, tar):
-    for idx in key_num.keys():
-        if tar in key_num[idx]:
-            return idx+1
-    return -1
