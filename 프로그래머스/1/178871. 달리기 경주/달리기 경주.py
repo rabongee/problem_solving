@@ -1,9 +1,10 @@
 def solution(players, callings):
-    player_indices = {player: i for i, player in enumerate(players)}
+    player_dict = {player: i for i, player in enumerate(players)}
+
     for calling in callings:
-        current_index = player_indices[calling]
-        swap_index = current_index - 1
-        players[swap_index], players[current_index] = players[current_index], players[swap_index]
-        player_indices[players[swap_index]] = swap_index
-        player_indices[players[current_index]] = current_index
+        current_rank = player_dict[calling]
+        outpace = current_rank - 1
+        players[outpace], players[current_rank] = players[current_rank], players[outpace]
+        player_dict[players[outpace]] = outpace
+        player_dict[players[current_rank]] = current_rank
     return players
